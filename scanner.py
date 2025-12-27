@@ -14,18 +14,30 @@ class LibraryScanner:
         series_str = None
         source = "Tag"
 
-        # 1. Try JSON
+        # --- 1. Try JSON ---
         if json_data:
             source = "JSON"
-            title = json_data.get("title")
-            authors_list = json_data.get("authors", [])
-            if authors_list:
-                author = ", ".join(authors_list)
-            series_list = json_data.get("series", [])
-            if series_list:
-                series_str = series_list[0]
 
-        # 2. Fallback to Tags
+            # Title
+            title = json_data.get("title")
+
+            # Only first author
+            authors_list = json_data.get("authors", [])
+            author = authors_list[0] if authors_list else None
+
+            # Series
+            series_list = json_data.get("series", [])
+            series_str = series_list[0] if series_list else None
+
+            # New ABS fields
+            description = json_data.get("description")
+            narrators_list = json_data.get("narrators", [])
+            narrator = narrators_list[0] if narrators_list else None
+            year = json_data.get("publishedYear")
+            isbn = json_data.get("isbn")
+            asin = json_data.get("asin")
+
+        # --- 2. Fallback to Tags if JSON missing ---
         try:
             audio = MP4(path)
 
@@ -39,9 +51,10 @@ class LibraryScanner:
             if source == "JSON":
                 source = "Mixed"
         except Exception:
+            # If reading tags fails, just continue
             pass
 
-        # 3. Parse Series String
+        # --- 3. Parse Series String ---
         series_name = None
         series_idx = None
 
@@ -58,6 +71,7 @@ class LibraryScanner:
                     series_idx = file_num_match.group(1)
                     source += " (File #)"
 
+        # --- 4. Return Audiobook object with new fields ---
         return Audiobook(
             path=path,
             filename=path.name,
@@ -65,5 +79,10 @@ class LibraryScanner:
             author=author if author else "Unknown",
             series=series_name,
             series_index=series_idx,
-            source=source
+            source=source,
+            description=locals().get("description"),
+            narrator=locals().get("narrator"),
+            year=locals().get("year"),
+            isbn=locals().get("isbn"),
+            asin=locals().get("asin")
         )

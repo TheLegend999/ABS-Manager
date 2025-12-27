@@ -56,7 +56,6 @@ class ScanWorker(QThread):
                     library[book.author] = {}
 
                 # If series is None, group into "Standalone Books"
-                # If series exists (from Tag), it uses that Tag Name.
                 series_key = book.series if book.series else "Standalone Books"
 
                 if series_key not in library[book.author]:
@@ -105,6 +104,27 @@ class TagWorker(QThread):
                         audio.tags["disk"] = [(idx_int, 0)]
                     except ValueError:
                         pass
+
+                if getattr(book, "description", None):
+                    audio.tags["\xa9cmt"] = book.description
+
+                if getattr(book, "narrator", None):
+                    audio.tags["----:com.apple.iTunes:NARRATOR"] = [
+                        book.narrator.encode("utf-8")
+                    ]
+
+                if getattr(book, "year", None):
+                    audio.tags["\xa9day"] = str(book.year)
+
+                if getattr(book, "isbn", None):
+                    audio.tags["----:com.apple.iTunes:ISBN"] = [
+                        book.isbn.encode("utf-8")
+                    ]
+
+                if getattr(book, "asin", None):
+                    audio.tags["----:com.apple.iTunes:ASIN"] = [
+                        book.asin.encode("utf-8")
+                    ]
 
                 audio.save()
                 self.item_updated.emit(book, True)
