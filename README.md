@@ -1,5 +1,3 @@
-Markdown
-
 # Audiobookshelf Metadata Manager
 
 > **⚠️ DISCLAIMER: I AM NOT A CODER.**
@@ -11,7 +9,7 @@ Markdown
 
 A Python GUI tool to manage, audit, and fix metadata for `.m4b` audiobook libraries.
 
-I created this because **my entire library is in `.m4b` format, but none of the files had the correct internal tags.** Audiobookshelf wasn't grouping them properly because the files themselves were empty or wrong. This tool fixes that by writing the correct data directly into the files.
+I created this because **my entire library is in `.m4b` format, but none of the files had the correct internal tags.** 3rd party tools were unable to correctly sort audiobooks into proper folders. This tool fixes that by writing the correct data directly into the files.
 
 ## Features
 
@@ -23,25 +21,33 @@ I created this because **my entire library is in `.m4b` format, but none of the 
     * Syncs `©ART` (Author) and `©nam` (Title).
 * **Safety:** It edits metadata in place but **does not** rename or move your files.
 
-## Setup
-
-**Environment:**
-
-* Arch Linux / Fish Shell
-* Python 3.13
-
-**Dependencies:**
+## Installation
 
 ```bash
-pip install PyQt6 mutagen
+git clone https://github.com/TheLegend999/ABS-Manager.git
+cd ABS-Manager
+```
 
+Setup
+
+Environment:
+Arch Linux / Fish Shell
+
+    Python 3.13
+
+Dependencies:
+
+```
+pip install PyQt6 mutagen
+```
 Usage
 
 Activate Environment:
-Bash
-
+```
 source ~/audiobook-env/bin/activate.fish
+```
 
 Run the Tool:
-
+```
 python main.py
+```
