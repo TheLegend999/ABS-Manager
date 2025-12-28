@@ -12,9 +12,9 @@ class Audiobook:
     series_index: Optional[str]
     source: str
 
-    # New ABS fields
-    description: Optional[str] = None
-    narrator: Optional[str] = None
-    year: Optional[int] = None
+    # Optional ABS metadata fields
+    narrators: Optional[str] = None
+    year: Optional[str] = None
     isbn: Optional[str] = None
     asin: Optional[str] = None
+    description: Optional[str] = None
