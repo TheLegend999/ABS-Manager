@@ -7,7 +7,7 @@
 
 ## Project Overview
 
-A Python GUI tool to manage, audit, and fix metadata for `.m4b` audiobook libraries. Currently only supports series editing. I am activly working on more features.
+A Python GUI tool to manage, audit, and fix metadata for `.m4b` audiobook libraries. Only supports mass tagging. Currently working on adding per tag tagging.
 
 I created this because **my entire library is in `.m4b` format, but none of the files had the correct internal tags.** 3rd party tools were unable to correctly sort audiobooks into proper folders. This tool fixes that by writing the correct data directly into the files.
 
